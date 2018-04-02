@@ -7,98 +7,45 @@
 
 
 using namespace std;
-// token := time elapsed remotehost code/status bytes method URL rfc931 peerstatus/peerhost type
+/*
+token := time elapsed remotehost code/status bytes method URL rfc931 peerstatus/peerhost type
+maps code:
+map[ 0 ] := time
+map[ 1 ] := elapsed
+map[ 2 ] := remotehost
+map[ 3 ] := code/status
+map[ 4 ] := bytes
+map[ 5 ] := method
+map[ 6 ] := URL
+map[ 7 ] := rfc931
+map[ 8 ] := peerstatus/peerhost
+map[ 9 ] := type
+
+*/
 vector<string> split(string);
+ostream& serialize(ostream& , const map<string, size_t>&);
 
 int main(int argc, char **argv) {
-    ifstream input(argv[1]);
+    string filename = argv[1];
+
+    ifstream input(filename);
+    ofstream output(filename + ".out");
+
     string log_line;
     vector<string> token;
-    map<string, size_t> elapsed_count;
-    map<string, size_t> remotehost_count;
-    map<string, size_t> codestatus_count;
-    map<string, size_t> bytes_count;
-    map<string, size_t> method_count;
-    map<string, size_t> URL_count;
-    map<string, size_t> rfc931_count;
-    map<string, size_t> peerstatus_host_count;
-    map<string, size_t> type_count;
+    vector<map<string, size_t>> stats(NOM_TOKEN);
 
     while(getline(input, log_line)) {
         token = split(log_line);
-        for(auto i = 1; i < REAL_TOKEN + 1; i++) {
-            switch (i) {
-                case 1:
-                    ++elapsed_count[token[i]];
-                    break;
-                case 2:
-                    ++remotehost_count[token[i]];
-                    break;
-                case 3:
-                    ++codestatus_count[token[i]];
-                    break;
-                case 4:
-                    ++bytes_count[token[i]];
-                    break;
-                case 5:
-                    ++method_count[token[i]];
-                    break;
-                case 6:
-                    ++URL_count[token[i]];
-                    break;
-                case 7:
-                    ++rfc931_count[token[i]];
-                    break;
-                case 8:
-                    ++peerstatus_host_count[token[i]];
-                    break;
-                case 9:
-                    ++type_count[token[i]];
-                    break;
-            }
+        for(auto i = 1; i < NOM_TOKEN; i++) {
+            ++stats[i][token[i]];
         }
     }
 
-    for(auto i = 1; i < REAL_TOKEN + 1; i++) {
-         switch (i) {
-             case 1:
-                 for(const auto& entry : elapsed_count)
-                    cout << entry.first << " " << entry.second << endl;
-                 break;
-             case 2:
-                 for(const auto& entry : remotehost_count)
-                    cout << entry.first << " " << entry.second << endl;
-                 break;
-             case 3:
-                 for(const auto& entry : codestatus_count)
-                    cout << entry.first << " " << entry.second << endl;
-                 break;
-             case 4:
-                 for(const auto& entry : bytes_count)
-                    cout << entry.first << " " << entry.second << endl;
-                 break;
-             case 5:
-                 for(const auto& entry : method_count)
-                    cout << entry.first << " " << entry.second << endl;
-                 break;
-             case 6:
-                 for(const auto& entry : URL_count)
-                    cout << entry.first << " " << entry.second << endl;
-                 break;
-             case 7:
-                  for(const auto& entry : rfc931_count)
-                    cout << entry.first << " " << entry.second << endl;
-                 break;
-             case 8:
-                  for(const auto& entry : peerstatus_host_count)
-                    cout << entry.first << " " << entry.second << endl;
-                 break;
-             case 9:
-                  for(const auto& entry : type_count)
-                    cout << entry.first << " " << entry.second << endl;
-                 break;
-         }
-     }
+    input.close();
+
+    for(auto i = 1; i < NOM_TOKEN; i++) 
+        serialize(output, stats[i]);
 }
 
 vector<string> split(string line) {
@@ -115,4 +62,17 @@ vector<string> split(string line) {
     }
     tokens.push_back(buf);       // last chars are not saved because never occurs a blank character...
     return tokens;
+}
+
+ostream& serialize(ostream& os, const map<string, size_t>& data) {
+    auto it = data.begin();
+    auto proper_end = --data.end();
+    os << "{";
+    while(it != proper_end) {
+        os << "{" << it->first << ", " << it->second << "}, ";
+        it++;
+    }
+    os << "{" << it->first << ", " << it->second << "}";
+    os << "}" << endl;
+    return os;
 }
