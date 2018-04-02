@@ -27,7 +27,7 @@ ostream& serialize(ostream& , const map<string, size_t>&);
 
 int main(int argc, char **argv) {
     string filename = argv[1];
-
+    cout << "ok" << endl;
     ifstream input(filename);
     ofstream output(filename + ".out");
 
@@ -35,11 +35,16 @@ int main(int argc, char **argv) {
     vector<string> token;
     vector<map<string, size_t>> stats(NOM_TOKEN);
 
+    unsigned i_temp = 1;
     while(getline(input, log_line)) {
         token = split(log_line);
-        for(auto i = 1; i < NOM_TOKEN; i++) {
-            ++stats[i][token[i]];
+        if(token.size() > 10) {
+            // cout << "many tokens than expected, size: " << token.size() << " \tline " << i_temp << " not processed!" << endl;
+            continue;
         }
+        for(auto i = 1; i < NOM_TOKEN; i++)
+            ++stats[i][token[i]];
+        i_temp++;
     }
 
     input.close();
