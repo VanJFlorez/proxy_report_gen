@@ -23,12 +23,11 @@ vector<string> split(string line) {
 ostream& serialize(ostream& os, const map<string, size_t>& data) {
     auto it = data.begin();
     auto proper_end = --data.end();
-    os << "{";
     while(it != proper_end) {
-        os << "{" << it->first << ", " << it->second << "}, ";
+        os << it->first << " " << it->second << endl;
         it++;
     }
-    os << "{" << it->first << ", " << it->second << "}";
-    os << "}" << endl;
+    os << it->first << " " << it->second << endl;
+    os << "#" << endl;
     return os;
 }
