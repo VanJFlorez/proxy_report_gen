@@ -36,11 +36,11 @@ int main(int argc, char **argv) {
     unsigned i_temp = 1;
     while(getline(input, log_line)) {
         token = split(log_line);
-        if(token.size() > 10) {
-            // cout << "many tokens than expected, size: " << token.size() << " \tline " << i_temp << " not processed!" << endl;
+        if(token.size() != 10) {
+            cout << "many tokens than expected, size: " << token.size() << " \tline " << i_temp << " not processed!" << endl;
             continue;
         }
-        for(auto i = 1; i < NOM_TOKEN; i++)
+        for(auto i = 1; i < NOM_TOKEN; i++) // there are NOM_TOKEN maps but only are used REAL_TOKEN maps (first not used)
             ++stats[i][token[i]];
         i_temp++;
     }
