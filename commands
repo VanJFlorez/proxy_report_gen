@@ -1,1 +1,3 @@
-split --verbose -l 10000000 #PREFIX
+split --verbose -l 10000000 logsplit    # split files, each file is name logsplit
+ls | parallel proxy_stats               # execute in parallel the computation of stat
+                                        # per each logsplit

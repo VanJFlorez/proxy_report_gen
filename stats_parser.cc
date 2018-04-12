@@ -24,23 +24,35 @@ map[ 9 ] := type
 
 int main(int argc, char** argv) {
     ifstream infile;
-    vector<map<string, long>> total(NOM_TOKEN);
+    vector<map<string, long>> total(NOM_TOKEN); // each map holds the total count of each the 9 token types
     for(int i = 0; i < argc; i++) {
         infile.open(argv[i + 1]);
         int map_number = 1;
         string line;
         vector<string> token;
-        
         while(getline(infile, line)) {
-            cout << token[0] << " " << token[1] << endl;
+            token = split(line);
             if(line == "#")
                 map_number++;        
             else {
                 token = split(line);
-                total[map_number][token[0]] += atoi(token[1]);
+                total[map_number][token[0]] += atoi(token[1].c_str());
             }
 
         }
         infile.close();
     }
+
+    cout << "ikasfj" << endl;
+
+    for(auto i : total) {
+        auto it = i.begin();
+        auto end = i.end();
+        while(it != end){ 
+            cout << it->first << " " << it->second << endl;
+            it++;
+        }
+    }
+
+
 }

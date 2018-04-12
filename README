@@ -1,0 +1,15 @@
+>> There are two main executables:
+    - proxy_stats := it outputs one file that counts the number of occurrences 
+                     for each one of nine types of token. Each count per token
+                     is separated by one line that contains a '#'. The extension
+                     of output file is *.out.
+    - stats_parser := sumarizes in a single file several proxy_stats outputed
+                      files.
+
+
+>> How to run:
+   - proxy_stats receives as input a filename. example:  ./proxy_stats log.file 
+   - stats_parser receives as input several filenames. 
+     example: ./stats_parser log1.file log2.file ... log3.file
+
+
