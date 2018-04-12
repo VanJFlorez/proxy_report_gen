@@ -20,7 +20,7 @@ vector<string> split(string line) {
     return tokens;
 }
 
-ostream& serialize(ostream& os, const map<string, size_t>& data) {
+ostream& serialize(ostream& os, const map<string, long>& data) {
     auto it = data.begin();
     auto proper_end = --data.end();
     while(it != proper_end) {

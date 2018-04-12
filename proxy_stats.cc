@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
 
     string log_line;
     vector<string> token;
-    vector<map<string, size_t>> stats(NOM_TOKEN);
+    vector<map<string, long>> stats(NOM_TOKEN);
 
     unsigned i_temp = 1;
     while(getline(input, log_line)) {

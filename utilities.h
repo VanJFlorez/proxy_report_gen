@@ -5,4 +5,5 @@
 using namespace std; 
 
 vector<string> split(string);
-ostream& serialize(ostream& , const map<string, size_t>&);
+
+ostream& serialize(ostream& , const map<string, long>&);

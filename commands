@@ -1,3 +1,9 @@
 split --verbose -l 10000000 logsplit    # split files, each file is name logsplit
 ls | parallel proxy_stats               # execute in parallel the computation of stat
                                         # per each logsplit
+
+
+
+g++ --std=c++11 proxy_stats.cc utilities.cc -o  proxy_stats         # compile proxy_stats
+g++ --std=c++11 stats_parser.cc utilities.cc -o stats_parser        # compile stats_parser
+

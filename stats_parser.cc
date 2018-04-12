@@ -24,6 +24,7 @@ map[ 9 ] := type
 
 int main(int argc, char** argv) {
     ifstream infile;
+    ofstream outfile("total");
     vector<map<string, long>> total(NOM_TOKEN); // each map holds the total count of each the 9 token types
     for(int i = 0; i < argc; i++) {
         infile.open(argv[i + 1]);
@@ -40,19 +41,13 @@ int main(int argc, char** argv) {
             }
 
         }
+        cout << "file" << i + 1 << " parsed..." << endl;
         infile.close();
     }
+    
+    for(auto i = 1; i < NOM_TOKEN; i++)  {
+        cout << "token " << i << " ok " << endl;
+        serialize(outfile, total[i]);
 
-    cout << "ikasfj" << endl;
-
-    for(auto i : total) {
-        auto it = i.begin();
-        auto end = i.end();
-        while(it != end){ 
-            cout << it->first << " " << it->second << endl;
-            it++;
-        }
     }
-
-
 }
