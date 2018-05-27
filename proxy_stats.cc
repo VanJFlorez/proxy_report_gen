@@ -21,7 +21,6 @@ map[ 6 ] := URL
 map[ 7 ] := rfc931
 map[ 8 ] := peerstatus/peerhost
 map[ 9 ] := type
-
 */
 
 int main(int argc, char **argv) {
@@ -31,7 +30,7 @@ int main(int argc, char **argv) {
 
     string log_line;
     vector<string> token;
-    vector<map<string, long>> stats(NOM_TOKEN);
+    vector<map<string, long>> stats(NOM_TOKEN); // [1]
 
     unsigned i_temp = 1;
     while(getline(input, log_line)) {
@@ -45,8 +44,16 @@ int main(int argc, char **argv) {
         i_temp++;
     }
 
-    input.close();
+    input.close(); //  [2]
 
     for(auto i = 1; i < NOM_TOKEN; i++) 
         serialize(output, stats[i]);
 }
+
+/*
+    [1] The data structure map<T, U> in cpp in each addition keeps the collection
+        ordered by key. As we need that be sorted by value (this is, the counters),
+        we may think in stablish the comparison criterion to associated value, but by the 
+        conception of data structure (binary heap ~ oredered binary tree), this will
+        corrupt the automatic sorting of elements. For this reason we use an unordered_map.
+*/

@@ -8,7 +8,9 @@
 
 
 >> How to run:
-   - proxy_stats receives as input a filename. example:  ./proxy_stats log.file 
+   - proxy_stats receives as input a filename. example:  ./proxy_stats log_name.file 
+     Then counts the number of appareances of each element inside each token type.
+     This count is serialized in a file that has as name log_name.file.out
    - stats_parser receives as input several filenames. 
      example: ./stats_parser log1.file log2.file ... log3.file
 
